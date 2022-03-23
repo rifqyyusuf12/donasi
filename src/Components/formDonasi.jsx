@@ -20,6 +20,8 @@ class FormDonasi extends Form {
     image: Joi.string().required().label("Bukti Transfer"),
   };
 
+  
+
   // doSubmit = (e) => {
   //   e.preventDefault()
   //   alert('ererere')
