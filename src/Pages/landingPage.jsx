@@ -12,49 +12,31 @@ import {
   Center,
   Button
 } from "@chakra-ui/react";
-import { Link } from 'react-router-dom';
-import AppButton from './../Components/Common/button';
-import FormDonasi from './../Components/formDonasi';
 import axios from "axios";
+
+import DonasiForm from './../Components/donasiForm';
 
 class LandingPage extends Component {
   state = {
-    data: []
+    post: []
   };
-
-  async componentDidMount() {
-    const data = await axios.get("http://localhost:5000/api/transaction/")
-    this.setState(data)
+  getPostAPI = () => {
+    axios.get("http://localhost:5000/api/transaction/")
+    .then((result)=>{
+      console.log(result.data)
+      this.setState({
+        post: result.data
+      })
+    })
   }
 
-  // handleFile(e){
-    
-  //   let data = e.target.files[0]
-  //   this.setState({file: data})
-  // }
+  componentDidMount() {
+    this.getPostAPI()
+  }
 
-  // handleUpload(e){
-  //   console.log( this.state, "upload")
-
-  //   let file = this.state.data 
-    
-  //   let formdata = new formdata()
-    
-  //   formdata.append('image', file)
-    
-  //   formdata.append('name', 'rifqy yusuf')
-
-  //   axios({
-  //     url:'http://localhost:5000/api/donation',
-  //     method:"POST",
-  //     headers:{
-  //       authorization:'your token'
-  //     }
-  //   })
-  // }
 
   render() {
-    const { length : data } = this.state.data
+    const { length : data } = this.state.post
 
     if (data === 0 )
     return <Text>There are no data in the database</Text>
@@ -80,10 +62,10 @@ class LandingPage extends Component {
                 </Tr>
             </Thead>
             <Tbody>
-                {this.state.data.map(data => 
-                <Tr key={data._id}>
-                    <Td>{data.name}</Td>
-                    <Td>{data.price}</Td>
+                {this.state.post.map(post => 
+                <Tr key={post._id}>
+                    <Td>{post.name}</Td>
+                    <Td>{post.price}</Td>
                 </Tr>
                 )}
             </Tbody>
@@ -99,7 +81,8 @@ class LandingPage extends Component {
                 <Button onClick={(e)=>this.handleUpload(e)}>donasi</Button>
               </form> */}
             {/* </Center> */}
-        <FormDonasi/>
+        {/* <FormDonasi/> */}
+        <DonasiForm />
       </VStack>
     );
   }

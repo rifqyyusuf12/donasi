@@ -19,10 +19,10 @@ function App() {
     <Header />
     <ToastContainer/>
     <Routes>
-      <Route path="/" element={<Home/>} />
-      <Route path="/login" element={<LoginForm/>} />
-      <Route path="/singup" element={<Signup/>} />
-      <Route path="/landingpage" element={<LandingPage/>} />
+      <Route path="/" element={<LandingPage/>} />
+      <Route path="/admin" element={<Home/>} />
+      <Route path="/admin/login" element={<LoginForm/>} />
+      <Route path="/admin/singup" element={<Signup/>} />
     </Routes>
     </>
   );

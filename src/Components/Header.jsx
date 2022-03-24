@@ -32,10 +32,10 @@ const Header = () => {
           </Box>
           <Spacer />
           <Box mt="30" me="30">
-            <Link to="/">
+            <Link to="/admin">
               <Button
-                className={`${activeTab === "Home"} ? "active" : ""}`}
-                onClick={() => setActiveTab("Home")}
+                className={`${activeTab === "admin"} ? "active" : ""}`}
+                onClick={() => setActiveTab("admin")}
                 colorScheme="teal"
                 mr="4"
               >
@@ -43,7 +43,7 @@ const Header = () => {
                 Home
               </Button>
             </Link>
-            <Link to="/login">
+            <Link to="/admin/login">
               <Button
                 className={`${activeTab === "login"} ? "active" : ""}`}
                 onClick={() => setActiveTab("login")}
@@ -53,7 +53,7 @@ const Header = () => {
                 Login
               </Button>
             </Link>
-            <Link to="/singup">
+            <Link to="/admin/singup">
               <Button
                 className={`${activeTab === "singup"} ? "active" : ""}`}
                 onClick={() => setActiveTab("singup")}

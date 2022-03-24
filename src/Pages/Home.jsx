@@ -11,79 +11,68 @@ import {
   VStack,
   Center, 
   Text,
-  HStack,
-  Checkbox
+  Input
 } from "@chakra-ui/react";
 import { Link } from 'react-router-dom';
-import AppButton from './../Components/Common/button';
 import axios from "axios";
+import { swal } from 'sweetalert';
+
+import AppButton from './../Components/Common/button';
+import ButtonDelete from './../Components/Common/buttonDelete';
 
 
-const dataAdmin = "http://localhost:5000/api/transaction/pending"
 
 class LandingPage extends Component {
   state = {
-      data:[]
-    // donations: getDonations(),
+      post:[],
   };
 
-
-  async componentDidMount() {
-    const data = await axios.get(dataAdmin)
-    this.setState(data)
+  getPostAPI = () => {
+    axios.get("http://localhost:5000/api/transaction/pending")
+    .then((result)=>{
+      console.log(result.data)
+      this.setState({
+        post: result.data
+      })
+    })
   }
 
-  async handleTrue () {
-    const data = await axios.get(dataAdmin)
+  componentDidMount() {
+    this.getPostAPI()
+  }
+
+  handleRemove = (data) => {
     console.log(data)
+    let obj= { 
+              "isshow" : "no"
+            }
+    console.log(obj)
+    axios.delete(`http://localhost:5000/api/transaction/${data}`).then((res)=>{
+    console.log(res)
+    this.getPostAPI()
+    })
   }
-//   handleAdd = async () => {
-//       const obj = { name:"a", email:"a", numberPhone:"087887147471", price: "100000000" }
-//       const { data: post } = await axios.post(apiEndPoint, obj)
-//     //   console.log(post) cek kepanggil ato engga
-//     const posts = [post, ...this.state.posts]
-//     this.setState.({ posts })
-//   }
 
-//   handleUpdate = async post => {
-//       post.name = "UPDATE";
-//       await axios.put(apiEndpoint + "/" + post.id, post);
-
-//       const posts = [...this.state.posts]
-//       const index = posts.indexOf(post);
-//       posts[index] = {...post};
-//       this.setState({ posts })
-//   }
-
-
-  handleDelete = () => {
-    // const data = this.state.data
-    // console.log(data)
-    // // const [data] = this.state.data._id;
-    // // console.log([data])
-    // // const data = this.setState.data
-    // console.log(data)
-
-    
-        // const posts = this.state.data.filter(data => data.id !== data.id)
-        // console.log(posts)
-    // try {
-    //     await axios.delete(dataAdmin + '/' + data);
-    //     throw new Error ("")
-    // }catch (ex) {
-    //     alert ("Something failed while deleting a posts !")
-    //     this.setState({ posts: originalData })
-    // }
-
-//       console.log("delete", posts)
-//     const donations = this.state.donations.filter( m => m._id !== donation._id )
-//     this.setState ({ donations })
+  handleUpdate = (data) => {
+    console.log(data)
+    let obj= { 
+              "approved": "yes"
+            }   
+    alert('Anda sudah mengsubmit data!')
+    axios.put(`http://localhost:5000/api/transaction/approval/${data}`, obj)
+    .then((res)=>{
+    console.log(res)
+    this.getPostAPI()
+    })
+    .catch(err => {
+        console.log('err: ', err)
+    })
   }
 
   
 
   render() {
-    const { length : data } = this.state.data
+    const { length : data } = this.state.post
 
     if (data === 0 )
     return <Text>There are no data in the database</Text>
@@ -109,16 +98,16 @@ class LandingPage extends Component {
             </Tr>
           </Thead>
           <Tbody>
-              {this.state.data.map(data => 
-                <Tr key={data._id} >
-                    <Td>{data.name}</Td>
-                    <Td>{data.email}</Td>
-                    <Td>{data.phonenumber}</Td>
-                    <Td>{data.price}</Td>
-                    <Td>{data.image}</Td>
-                    <Td><Checkbox ></Checkbox></Td>
-                    <td><Button onClick={() => this.handleUpdate()} colorScheme='green'>Submit</Button></td>
-                    <td><Button onClick={() => this.handleDelete()} colorScheme='red'>Delete</Button></td>
+              {this.state.post.map(post => 
+                <Tr key={post._id} >
+                    <Td>{post.name}</Td>
+                    <Td>{post.email}</Td>
+                    <Td>{post.phonenumber}</Td>
+                    <Td>{post.price}</Td>
+                    <Td><img src='https://placeimg.com/100/100/any' alt="preview"/>
+                    <Text>{post.image}</Text>
+                    </Td>
+                    <Td><ButtonDelete remove={this.handleRemove} data={post} update={this.handleUpdate} /></Td>
                 </Tr>   
                 )}
           </Tbody>
@@ -127,7 +116,7 @@ class LandingPage extends Component {
         </Center>
         <Box>
         <Link 
-            to="/landingpage"
+            to="/"
             style= {{ marginBottom: 20 }}
             >
                 <AppButton title="New Data" color="yellow"/>

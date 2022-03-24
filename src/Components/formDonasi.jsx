@@ -20,7 +20,7 @@ class FormDonasi extends Form {
     image: Joi.string().required().label("Bukti Transfer"),
   };
 
-  
+
 
   // doSubmit = (e) => {
   //   e.preventDefault()
@@ -61,26 +61,9 @@ class FormDonasi extends Form {
 
   handleSubmit = async (e) => {
     e.preventDefault();
+    const data = this.state.data
+    console.log(data.image)
     
-    // const submit = await axios.post("http://localhost:5000/api/donation")
-    // console.log(submit)
-
-    console.log(e.target.images);
-
-    // const header = {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Accept: "*/*",
-    //     "Access-Control-Allow-Origin": "*",
-    //     mode: "no-cors",
-    //     "access-control-allow-credentials": true,
-    //   },
-    // };
-    // await axios.post(
-    //   "http://localhost:5000/api/donation",
-    //   header
-    // );
 
     const errors = this.validate();
     this.setState({ errors: errors || {} });
@@ -105,7 +88,6 @@ class FormDonasi extends Form {
             {this.renderInput("phonenumber", "No. Hp", "number")}
             {this.renderInput("price", "JumlahDonasi")}
             {this.renderInput("image", "Bukti Transfer", "file")}
-            {/* <input type="file" name="image" onChange={this.onImageChange} onSubmit={this.handleSubmit} /> */}
             <Button onClick={this.handleSubmit}>Donasi</Button>
           </FormControl>
         </Box>
