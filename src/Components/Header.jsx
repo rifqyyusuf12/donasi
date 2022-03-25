@@ -25,7 +25,7 @@ const Header = () => {
 
   return (
     <>
-      <Box className="Header" backgroundColor="yellow.300" h="100px">
+      <Box className="Header" backgroundColor="yellow.300" h="100px" w="100%">
         <Flex columnGap="10">
           <Box mt="30" ms="30">
             <Heading size="md">Donasi</Heading>
@@ -43,7 +43,7 @@ const Header = () => {
                 Home
               </Button>
             </Link>
-            <Link to="/admin/login">
+            <Link to="/login">
               <Button
                 className={`${activeTab === "login"} ? "active" : ""}`}
                 onClick={() => setActiveTab("login")}
@@ -53,7 +53,7 @@ const Header = () => {
                 Login
               </Button>
             </Link>
-            <Link to="/admin/singup">
+            <Link to="/singup">
               <Button
                 className={`${activeTab === "singup"} ? "active" : ""}`}
                 onClick={() => setActiveTab("singup")}

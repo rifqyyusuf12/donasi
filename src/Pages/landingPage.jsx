@@ -9,8 +9,7 @@ import {
   Td,
   Box,
   VStack,
-  Center,
-  Button
+  Center
 } from "@chakra-ui/react";
 import axios from "axios";
 
@@ -21,7 +20,7 @@ class LandingPage extends Component {
     post: []
   };
   getPostAPI = () => {
-    axios.get("http://192.168.80.136:5000/api/transaction/")
+    axios.get("http://localhost:5000/api/transaction/")
     .then((result)=>{
       console.log(result.data)
       this.setState({

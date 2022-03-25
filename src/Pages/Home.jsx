@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-  Button,
   Table,
   Thead,
   Tbody,
@@ -9,22 +8,14 @@ import {
   Td,
   Box,
   VStack,
-  Center,
   Text,
-  Modal,
-  ModalOverlay,
-  ModalHeader,
-  ModalContent,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
-import { swal } from "sweetalert";
 
 import AppButton from "./../Components/Common/button";
 import ButtonAdmin from "./../Components/Common/buttonDelete";
+import Header from './../Components/Header';
 
 class LandingPage extends Component {
   state = {
@@ -33,7 +24,7 @@ class LandingPage extends Component {
 
   getPostAPI = () => {
     axios
-      .get("http://192.168.80.136:5000/api/transaction/pending")
+      .get("http://localhost:5000/api/transaction/pending")
       .then((result) => {
         console.log(result.data);
         this.setState({
@@ -53,7 +44,7 @@ class LandingPage extends Component {
     };
     console.log(obj);
     axios
-      .delete(`http://192.168.80.136:5000/api/transaction/${data}`)
+      .delete(`http://localhost:5000/api/transaction/${data}`)
       .then((res) => {
         console.log(res);
         this.getPostAPI();
@@ -67,7 +58,7 @@ class LandingPage extends Component {
     };
     alert("Anda sudah mengsubmit data!");
     axios
-      .put(`http://192.168.80.136:5000/api/transaction/approval/${data}`, obj)
+      .put(`http://localhost:5000/api/transaction/approval/${data}`, obj)
       .then((res) => {
         console.log(res);
         this.getPostAPI();
@@ -77,37 +68,20 @@ class LandingPage extends Component {
       });
   };
 
-  // Review = (post) => {
-  //   const { isOpen, onOpen, onClose } = this.Review()
-
-  //   return (
-  //     <>
-  //       <Button onClick={onOpen}>Trigger modal</Button>
-
-  //       <Modal onClose={onClose} isOpen={isOpen} isCentered>
-  //         <ModalOverlay />
-  //         <ModalContent>
-  //           <ModalHeader>Modal Title</ModalHeader>
-  //           <ModalCloseButton />
-  //           <ModalBody>
-  //           <img src={`http://` + post.image} alt="preview" width="30%" />
-  //           </ModalBody>
-  //           <ModalFooter>
-  //             <Button onClick={onClose}>Close</Button>
-  //           </ModalFooter>
-  //         </ModalContent>
-  //       </Modal>
-  //     </>
-  //   )
-  // }
 
   render() {
     const { length: data } = this.state.post;
 
+      // if (!authorized) {
+      //   return <Navigate to="/login" replace />
+      // }
+
     if (data === 0) return <Text>There are no data in the database</Text>;
+
 
     return (
       <VStack align="center">
+        <Header />
         <Box py="30">
           <Text> Showing {data} data in the database</Text>
         </Box>
@@ -132,7 +106,7 @@ class LandingPage extends Component {
                   <Td>{post.price}</Td>
                   <Td>
                     <Box w="30%">
-                      <a href={`http://` + post.image}>
+                      <a href={`http://` + post.image} target="blank">
                         <img src={`http://` + post.image} alt="preview" />
                       </a>
                     </Box>

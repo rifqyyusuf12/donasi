@@ -20,7 +20,6 @@ ReactDOM.render(
   <ChakraProvider theme={theme}>
     <App />
   </ChakraProvider>
-  
   </BrowserRouter>,
   document.getElementById('root')
 );
