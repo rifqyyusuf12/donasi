@@ -21,7 +21,7 @@ class LandingPage extends Component {
     post: []
   };
   getPostAPI = () => {
-    axios.get("http://localhost:5000/api/transaction/")
+    axios.get("http://192.168.80.136:5000/api/transaction/")
     .then((result)=>{
       console.log(result.data)
       this.setState({
@@ -51,9 +51,9 @@ class LandingPage extends Component {
         </Box>
 
         <Center w="100%">
-    <Box w="50%" shadow="12">
-            <Table>
-            <Thead backgroundColor="yellow.300" >
+    <Box w="50%">
+            <Table size="lg" boxShadow="xl" >
+            <Thead backgroundColor="yellow.300">
                 <Tr>
                 <Th>Nama</Th>
                 <Th>Jumlah Donasi</Th>
@@ -72,16 +72,6 @@ class LandingPage extends Component {
             </Table>
             </Box>
         </Center>
-
-            {/* <Center>
-              {/* <form>
-
-                <input type="file" name="image" onChange={(e) => this.handleFile(e)} />
-                <br/>
-                <Button onClick={(e)=>this.handleUpload(e)}>donasi</Button>
-              </form> */}
-            {/* </Center> */}
-        {/* <FormDonasi/> */}
         <DonasiForm />
       </VStack>
     );

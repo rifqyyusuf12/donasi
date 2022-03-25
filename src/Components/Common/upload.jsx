@@ -6,7 +6,7 @@ const Upload = ({img, ...rest}) => {
     return ( 
         <Center>
         <Box className='upload'>
-            {img && <img className='preview' src={img} alt="preview" width="40%" />}
+            {img && <img className='preview' src={img} alt="preview" width="80%" />}
             <input type="file"  {...rest} />
         </Box>
 

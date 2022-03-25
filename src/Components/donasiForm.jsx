@@ -26,7 +26,7 @@ const DonasiForm = () => {
     data.append("price", price);
     data.append("image", image);
 
-    Axios.post("http://localhost:5000/api/donation", data, {
+    Axios.post("http://192.168.80.136:5000/api/donation", data, {
       headers: {
         "content-type": "multipart/form-data",
       },
