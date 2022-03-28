@@ -20,7 +20,7 @@ class LandingPage extends Component {
     post: []
   };
   getPostAPI = () => {
-    axios.get("http://localhost:5000/api/transaction/")
+    axios.get("http://localhost:5000/api/landingpage")
     .then((result)=>{
       console.log(result.data)
       this.setState({

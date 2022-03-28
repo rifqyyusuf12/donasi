@@ -10,12 +10,13 @@ import {
   VStack,
   Text,
 } from "@chakra-ui/react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
+import { reactLocalStorage } from "reactjs-localstorage";
 
 import AppButton from "./../Components/Common/button";
 import ButtonAdmin from "./../Components/Common/buttonDelete";
-import Header from './../Components/Header';
+import Header from "./../Components/Header";
 
 class LandingPage extends Component {
   state = {
@@ -23,10 +24,17 @@ class LandingPage extends Component {
   };
 
   getPostAPI = () => {
+    const token = reactLocalStorage.get("token");
+    console.log(token);
+
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
     axios
-      .get("http://localhost:5000/api/transaction/pending")
+      .get("http://localhost:5000/api/transaction/pending", config)
       .then((result) => {
-        console.log(result.data);
         this.setState({
           post: result.data,
         });
@@ -38,13 +46,16 @@ class LandingPage extends Component {
   }
 
   handleRemove = (data) => {
-    console.log(data);
+    // console.log(data);
+    const token = reactLocalStorage.get("token");
     let obj = {
       isshow: "no",
     };
-    console.log(obj);
+    // console.log(obj);
     axios
-      .delete(`http://localhost:5000/api/transaction/${data}`)
+      .delete(`http://localhost:5000/api/transaction/${data}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((res) => {
         console.log(res);
         this.getPostAPI();
@@ -52,32 +63,40 @@ class LandingPage extends Component {
   };
 
   handleUpdate = (data) => {
-    console.log(data);
+    // console.log(data);
     let obj = {
       approved: "yes",
     };
+
+    const token = reactLocalStorage.get("token");
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
     alert("Anda sudah mengsubmit data!");
     axios
-      .put(`http://localhost:5000/api/transaction/approval/${data}`, obj)
+      .put(
+        `http://localhost:5000/api/transaction/approval/${data}`,
+        obj,
+        config
+      )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         this.getPostAPI();
       })
       .catch((err) => {
-        console.log("err: ", err);
+        // console.log("err: ", err);
       });
   };
-
 
   render() {
     const { length: data } = this.state.post;
 
-      // if (!authorized) {
-      //   return <Navigate to="/login" replace />
-      // }
+    // if (!authorized) {
+    //   return <Navigate to="/login" replace />
+    // }
 
     if (data === 0) return <Text>There are no data in the database</Text>;
-
 
     return (
       <VStack align="center">
@@ -85,7 +104,7 @@ class LandingPage extends Component {
         <Box py="30">
           <Text> Showing {data} data in the database</Text>
         </Box>
-        <Box w="70%" >
+        <Box w="70%">
           <Table size="lg" boxShadow="xl">
             <Thead backgroundColor="yellow.300">
               <Tr>
@@ -123,11 +142,11 @@ class LandingPage extends Component {
             </Tbody>
           </Table>
         </Box>
-          <Box py="30">
-            <Link to="/" style={{ marginBottom: 20 }}>
-              <AppButton title="New Data" color="yellow" />
-            </Link>
-          </Box>
+        <Box py="30">
+          <Link to="/" style={{ marginBottom: 20 }}>
+            <AppButton title="New Data" color="yellow" />
+          </Link>
+        </Box>
       </VStack>
     );
   }

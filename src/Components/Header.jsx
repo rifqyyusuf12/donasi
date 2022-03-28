@@ -8,6 +8,9 @@ import {
   Button,
 } from "@chakra-ui/react";
 
+import ButtonAdmin from './Common/buttonDelete';
+import Logout from './Common/buttonLogout';
+
 
 const Header = () => {
   const [activeTab, setActiveTab] = useState("Home");
@@ -22,6 +25,8 @@ const Header = () => {
             setActiveTab("About")
         }
     }, [location])
+    
+  
 
   return (
     <>
@@ -43,7 +48,7 @@ const Header = () => {
                 Home
               </Button>
             </Link>
-            <Link to="/login">
+            {/* <Link to="/login">
               <Button
                 className={`${activeTab === "login"} ? "active" : ""}`}
                 onClick={() => setActiveTab("login")}
@@ -53,7 +58,7 @@ const Header = () => {
                 Login
               </Button>
             </Link>
-            <Link to="/singup">
+            <Link to="/signup">
               <Button
                 className={`${activeTab === "singup"} ? "active" : ""}`}
                 onClick={() => setActiveTab("singup")}
@@ -62,7 +67,8 @@ const Header = () => {
               >
                 Signup
               </Button>
-            </Link>
+            </Link> */}
+            <Logout />
           </Box>
         </Flex>
       </Box>
